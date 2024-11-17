@@ -50,7 +50,7 @@ abstract class Barrett extends Base
         static $cache = [self::VARIABLE => [], self::DATA => []];
         $m_length = \count($m);
         // if (self::compareHelper($n, $static::square($m)) >= 0) {
-        if (\count($n) > 2 * $m_length) {
+        if (\count($n) >= 2 * $m_length) {
             $lhs = new $class();
             $rhs = new $class();
             $lhs->value = $n;

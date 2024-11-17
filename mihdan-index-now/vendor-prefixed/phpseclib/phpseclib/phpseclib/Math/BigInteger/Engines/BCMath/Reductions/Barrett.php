@@ -59,7 +59,7 @@ abstract class Barrett extends Base
     {
         static $cache = [self::VARIABLE => [], self::DATA => []];
         $m_length = \strlen($m);
-        if (\strlen($n) > 2 * $m_length) {
+        if (\strlen($n) >= 2 * $m_length) {
             return \bcmod($n, $m);
         }
         // if (m.length >> 1) + 2 <= m.length then m is too small and n can't be reduced

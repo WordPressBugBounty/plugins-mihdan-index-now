@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="false"
+    stopOnFailure="false"
+    bootstrap="vendor/autoload.php"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+>
+  <!--
+    if using the dockerized_tests.sh runner, then there will be a warning about no code coverage driver. This is OK for
+    now, a docker image using xdebug can be added later.
+  -->
+  <coverage>
+    <report>
+      <text outputFile="php://stdout"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="Unit-Tests">
+      <directory>./test</directory>
+    </testsuite>
+  </testsuites>
+  <logging/>
+</phpunit>

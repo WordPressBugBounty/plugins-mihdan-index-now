@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'writecrow\\CountryCodeConverter\\' => array($vendorDir . '/writecrow/country_code_converter/src', $vendorDir . '/writecrow/country_code_converter/test'),
     'Mihdan\\IndexNow\\' => array($baseDir . '/src'),
 );
