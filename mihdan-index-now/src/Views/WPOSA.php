@@ -515,7 +515,9 @@ class WPOSA
 
 					$db_options = ! is_array($db_options) ? [] : $db_options;
 
-					$value = array_replace($db_options, wp_unslash(Utils::clean_data($_POST[$name])));
+					$submitted_data = apply_filters('wposa_submitted_data', $_POST[$name], $name, $_POST);
+
+					$value = array_replace($db_options, wp_unslash(Utils::clean_data($submitted_data)));
 
 					update_option($name, $value);
 
@@ -1423,10 +1425,10 @@ class WPOSA
 	private function show_help_tab_toggle($tab_id, $tab_icon = '?')
 	{
 		$is_url = strstr($tab_id, 'http');
-		$href = $is_url ? $tab_id : '#';
-		$title = $is_url ? esc_attr__('Click to view help guide', 'mihdan-index-now') : esc_attr__('Click to show Help tab', 'mihdan-index-now');
+		$href   = $is_url ? $tab_id : '#';
+		$title  = $is_url ? esc_attr__('Click to view help guide', 'mihdan-index-now') : esc_attr__('Click to show Help tab', 'mihdan-index-now');
 
-		$class = 'wpsa-help-tab-toggle' . ($is_url ? ' is-url' : '');
+		$class  = 'wpsa-help-tab-toggle' . ($is_url ? ' is-url' : '');
 		$target = $is_url ? '_blank' : '_self';
 		ob_start();
 		?>
@@ -1676,10 +1678,6 @@ class WPOSA
 				min-width: 0;
 			}
 
-			.wposa .description {
-				max-width: 350px;
-			}
-
 			input.wposa-field--switch {
 				position: relative;
 				-webkit-appearance: none;
@@ -1741,7 +1739,7 @@ class WPOSA
 			}
 
 			.wposa-section-description {
-				max-width: 600px;
+				max-width: 800px;
 			}
 
 			.wposa-form-table__row_type_hidden {
@@ -1783,6 +1781,10 @@ class WPOSA
 			.wposa__table th,
 			.wposa__table td {
 				padding: 7px;
+			}
+
+			.form-table .wposa-form-table__row th {
+				display: block;
 			}
 
 			.wposa-card--mihdan_index_now_wpshop {
@@ -2095,7 +2097,7 @@ class WPOSA
 			.wposa-nav-tab-wrapper {
 				display: flex;
 				flex-direction: column;
-				width: 25%;
+				width: 20%;
 				overflow: hidden;
 				gap: 8px;
 				padding-inline: 0;

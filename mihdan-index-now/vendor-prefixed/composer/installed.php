@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '2015d5ddeb28eba47fbc70b787377dfd5423a5fa',
+        'reference' => '7620dc6ea4c7067752ab7956d18903a5d884e342',
         'name' => 'mihdan/index-now',
         'dev' => false,
     ),
@@ -106,7 +106,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '2015d5ddeb28eba47fbc70b787377dfd5423a5fa',
+            'reference' => '7620dc6ea4c7067752ab7956d18903a5d884e342',
             'dev_requirement' => false,
         ),
         'monolog/monolog' => array(

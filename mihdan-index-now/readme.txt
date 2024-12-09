@@ -4,7 +4,7 @@ Donate link: https://crawlwp.com/
 Tags: seo, indexing, yandex, bing, google
 Requires at least: 5.9
 Tested up to: 6.7
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -20,6 +20,8 @@ Improve your WordPress SEO with instant search-engine indexing, SEO insights, an
 CrawlWP is a WordPress SEO plugin for faster search engine indexing and comprehensive SEO insights, ensuring your WordPress content gets indexed instantly across major search engines (Google, Microsoft Bing, Yandex, Naver, Yep, Seznam.cz) and tracking your SEO performance in real-time.
 
 [Website](https://crawlwp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) | [Documentation](https://crawlwp.com/docs/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion) | [Support](https://crawlwp.com/support/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion)
+
+https://www.youtube.com/watch?v=dKjQTtQyRyA&rel=0
 
 CrawlWP instantly notifies search engines whenever your website content is created, updated, or deleted, ensuring that search engines always have the latest updates about your WordPress site.
 
@@ -120,6 +122,9 @@ Such HTTP 429 Too Many Requests response status code indicates you are sending t
 Sitemaps help webmasters inform search engines about their WordPress pages, but search engines don't visit them often. With CrawlWP integration with IndexNow and the Indexing API of search engines, you can directly notify search engines of new content without waiting for them to crawl your sitemaps.
 
 == Changelog ==
+
+= 3.0.2 =
+* Added site verification feature.
 
 = 3.0.1 =
 * Fixed link to documentation.

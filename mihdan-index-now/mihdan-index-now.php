@@ -2,8 +2,8 @@
 /**
  * Plugin Name: CrawlWP SEO - Instant Indexing & SEO Insights
  * Description: SEO plugin for indexing WordPress content and monitoring search engine performance.
- * Version: 3.0.1
- * Author: CrawlWP
+ * Version: 3.0.2
+ * Author: CrawlWP SEO Team
  * Author URI: https://crawlwp.com/
  * Plugin URI: https://crawlwp.com/
  * Requires PHP: 7.4
@@ -22,7 +22,7 @@ if ( ! defined('ABSPATH')) {
 
 require_once __DIR__ . '/vendor-prefixed/autoload.php';
 
-define('MIHDAN_INDEX_NOW_VERSION', '3.0.1');
+define('MIHDAN_INDEX_NOW_VERSION', '3.0.2');
 define('MIHDAN_INDEX_NOW_SLUG', 'mihdan-index-now');
 define('MIHDAN_INDEX_NOW_PREFIX', 'mihdan_index_now');
 define('MIHDAN_INDEX_NOW_NAME', 'CrawlWP');
@@ -38,5 +38,7 @@ define('CRAWLWP_PRO_SEO_INDEX_SLUG', 'mihdan-seo-index');
 define('CRAWLWP_PRO_SEO_STAT_SLUG', 'mihdan-seo-stats');
 define('CRAWLWP_PRO_AUTO_INDEX_PAGE', admin_url('admin.php?page=' . CRAWLWP_PRO_SEO_INDEX_SLUG));
 define('CRAWLWP_PRO_SEO_STAT_PAGE', admin_url('admin.php?page=' . CRAWLWP_PRO_SEO_STAT_SLUG));
+
+do_action('crawlwp_lite_pre_init');
 
 (new Main(new Injector()))->init();
