@@ -281,6 +281,7 @@ class Salsa20 extends StreamCipher
             foreach ($blocks as &$block) {
                 $block ^= static::salsa20($this->p1 . \pack('V', $i++) . $this->p2);
             }
+            unset($block);
             return \implode('', $blocks);
         }
         if ($mode == self::ENCRYPT) {
@@ -314,6 +315,7 @@ class Salsa20 extends StreamCipher
                     foreach ($blocks as &$block) {
                         $block ^= static::salsa20($this->p1 . \pack('V', $buffer['counter']++) . $this->p2);
                     }
+                    unset($block);
                 }
                 $encrypted = \implode('', $blocks);
                 $temp = static::salsa20($this->p1 . \pack('V', $buffer['counter']++) . $this->p2);
@@ -330,6 +332,7 @@ class Salsa20 extends StreamCipher
                 foreach ($blocks as &$block) {
                     $block ^= static::salsa20($this->p1 . \pack('V', $buffer['counter']++) . $this->p2);
                 }
+                unset($block);
                 $ciphertext .= \implode('', $blocks);
             }
         }

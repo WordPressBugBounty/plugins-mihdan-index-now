@@ -20,5 +20,5 @@ namespace Mihdan\IndexNow\Dependencies\Google\Auth;
 /** @internal */
 interface ExternalAccountCredentialSourceInterface
 {
-    public function fetchSubjectToken(callable $httpHandler = null) : string;
+    public function fetchSubjectToken(?callable $httpHandler = null) : string;
 }

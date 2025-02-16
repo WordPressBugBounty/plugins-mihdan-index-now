@@ -39,7 +39,7 @@ class FetchAuthTokenCache implements FetchAuthTokenInterface, GetQuotaProjectInt
      * @param array<mixed> $cacheConfig Configuration for the cache
      * @param CacheItemPoolInterface $cache
      */
-    public function __construct(FetchAuthTokenInterface $fetcher, array $cacheConfig = null, CacheItemPoolInterface $cache)
+    public function __construct(FetchAuthTokenInterface $fetcher, ?array $cacheConfig = null, ?CacheItemPoolInterface $cache = null)
     {
         $this->fetcher = $fetcher;
         $this->cache = $cache;
@@ -62,7 +62,7 @@ class FetchAuthTokenCache implements FetchAuthTokenInterface, GetQuotaProjectInt
      * @return array<mixed> the response
      * @throws \Exception
      */
-    public function fetchAuthToken(callable $httpHandler = null)
+    public function fetchAuthToken(?callable $httpHandler = null)
     {
         if ($cached = $this->fetchAuthTokenFromCache()) {
             return $cached;
@@ -91,7 +91,7 @@ class FetchAuthTokenCache implements FetchAuthTokenInterface, GetQuotaProjectInt
      * @param callable $httpHandler An HTTP handler to deliver PSR7 requests.
      * @return string
      */
-    public function getClientName(callable $httpHandler = null)
+    public function getClientName(?callable $httpHandler = null)
     {
         if (!$this->fetcher instanceof SignBlobInterface) {
             throw new \RuntimeException('Credentials fetcher does not implement ' . 'Google\\Auth\\SignBlobInterface');
@@ -145,7 +145,7 @@ class FetchAuthTokenCache implements FetchAuthTokenInterface, GetQuotaProjectInt
      * @throws \RuntimeException If the fetcher does not implement
      *     `Google\Auth\ProvidesProjectIdInterface`.
      */
-    public function getProjectId(callable $httpHandler = null)
+    public function getProjectId(?callable $httpHandler = null)
     {
         if (!$this->fetcher instanceof ProjectIdProviderInterface) {
             throw new \RuntimeException('Credentials fetcher does not implement ' . 'Google\\Auth\\ProvidesProjectIdInterface');
@@ -185,7 +185,7 @@ class FetchAuthTokenCache implements FetchAuthTokenInterface, GetQuotaProjectInt
      * @throws \RuntimeException If the fetcher does not implement
      *     `Google\Auth\UpdateMetadataInterface`.
      */
-    public function updateMetadata($metadata, $authUri = null, callable $httpHandler = null)
+    public function updateMetadata($metadata, $authUri = null, ?callable $httpHandler = null)
     {
         if (!$this->fetcher instanceof UpdateMetadataInterface) {
             throw new \RuntimeException('Credentials fetcher does not implement ' . 'Google\\Auth\\UpdateMetadataInterface');

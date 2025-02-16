@@ -35,7 +35,7 @@ class FileSource implements ExternalAccountCredentialSourceInterface
      * @param string $subjectTokenFieldName The name of the field containing the token in the file. This is required
      *                                      when format is "json".
      */
-    public function __construct(string $file, string $format = null, string $subjectTokenFieldName = null)
+    public function __construct(string $file, ?string $format = null, ?string $subjectTokenFieldName = null)
     {
         $this->file = $file;
         if ($format === 'json' && \is_null($subjectTokenFieldName)) {
@@ -44,7 +44,7 @@ class FileSource implements ExternalAccountCredentialSourceInterface
         $this->format = $format;
         $this->subjectTokenFieldName = $subjectTokenFieldName;
     }
-    public function fetchSubjectToken(callable $httpHandler = null) : string
+    public function fetchSubjectToken(?callable $httpHandler = null) : string
     {
         $contents = \file_get_contents($this->file);
         if ($this->format === 'json') {

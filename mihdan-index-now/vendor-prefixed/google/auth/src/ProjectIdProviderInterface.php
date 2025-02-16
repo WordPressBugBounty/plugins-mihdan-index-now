@@ -29,5 +29,5 @@ interface ProjectIdProviderInterface
      * @param callable $httpHandler Callback which delivers psr7 request
      * @return string|null
      */
-    public function getProjectId(callable $httpHandler = null);
+    public function getProjectId(?callable $httpHandler = null);
 }

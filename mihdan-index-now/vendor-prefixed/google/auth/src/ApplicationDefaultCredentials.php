@@ -90,9 +90,9 @@ class ApplicationDefaultCredentials
     public static function getSubscriber(
         // @phpstan-ignore-line
         $scope = null,
-        callable $httpHandler = null,
-        array $cacheConfig = null,
-        CacheItemPoolInterface $cache = null
+        ?callable $httpHandler = null,
+        ?array $cacheConfig = null,
+        ?CacheItemPoolInterface $cache = null
     )
     {
         $creds = self::getCredentials($scope, $httpHandler, $cacheConfig, $cache);
@@ -117,7 +117,7 @@ class ApplicationDefaultCredentials
      * @return AuthTokenMiddleware
      * @throws DomainException if no implementation can be obtained.
      */
-    public static function getMiddleware($scope = null, callable $httpHandler = null, array $cacheConfig = null, CacheItemPoolInterface $cache = null, $quotaProject = null)
+    public static function getMiddleware($scope = null, ?callable $httpHandler = null, ?array $cacheConfig = null, ?CacheItemPoolInterface $cache = null, $quotaProject = null)
     {
         $creds = self::getCredentials($scope, $httpHandler, $cacheConfig, $cache, $quotaProject);
         return new AuthTokenMiddleware($creds, $httpHandler);
@@ -143,7 +143,7 @@ class ApplicationDefaultCredentials
      * @return FetchAuthTokenInterface
      * @throws DomainException if no implementation can be obtained.
      */
-    public static function getCredentials($scope = null, callable $httpHandler = null, array $cacheConfig = null, CacheItemPoolInterface $cache = null, $quotaProject = null, $defaultScope = null, string $universeDomain = null)
+    public static function getCredentials($scope = null, ?callable $httpHandler = null, ?array $cacheConfig = null, ?CacheItemPoolInterface $cache = null, $quotaProject = null, $defaultScope = null, ?string $universeDomain = null)
     {
         $creds = null;
         $jsonKey = CredentialsLoader::fromEnv() ?: CredentialsLoader::fromWellKnownFile();
@@ -198,7 +198,7 @@ class ApplicationDefaultCredentials
      * @return AuthTokenMiddleware
      * @throws DomainException if no implementation can be obtained.
      */
-    public static function getIdTokenMiddleware($targetAudience, callable $httpHandler = null, array $cacheConfig = null, CacheItemPoolInterface $cache = null)
+    public static function getIdTokenMiddleware($targetAudience, ?callable $httpHandler = null, ?array $cacheConfig = null, ?CacheItemPoolInterface $cache = null)
     {
         $creds = self::getIdTokenCredentials($targetAudience, $httpHandler, $cacheConfig, $cache);
         return new AuthTokenMiddleware($creds, $httpHandler);
@@ -219,7 +219,7 @@ class ApplicationDefaultCredentials
      * @return ProxyAuthTokenMiddleware
      * @throws DomainException if no implementation can be obtained.
      */
-    public static function getProxyIdTokenMiddleware($targetAudience, callable $httpHandler = null, array $cacheConfig = null, CacheItemPoolInterface $cache = null)
+    public static function getProxyIdTokenMiddleware($targetAudience, ?callable $httpHandler = null, ?array $cacheConfig = null, ?CacheItemPoolInterface $cache = null)
     {
         $creds = self::getIdTokenCredentials($targetAudience, $httpHandler, $cacheConfig, $cache);
         return new ProxyAuthTokenMiddleware($creds, $httpHandler);
@@ -238,7 +238,7 @@ class ApplicationDefaultCredentials
      * @throws DomainException if no implementation can be obtained.
      * @throws InvalidArgumentException if JSON "type" key is invalid
      */
-    public static function getIdTokenCredentials($targetAudience, callable $httpHandler = null, array $cacheConfig = null, CacheItemPoolInterface $cache = null)
+    public static function getIdTokenCredentials($targetAudience, ?callable $httpHandler = null, ?array $cacheConfig = null, ?CacheItemPoolInterface $cache = null)
     {
         $creds = null;
         $jsonKey = CredentialsLoader::fromEnv() ?: CredentialsLoader::fromWellKnownFile();
@@ -289,7 +289,7 @@ class ApplicationDefaultCredentials
      * @param CacheItemPoolInterface $cache
      * @return bool
      */
-    private static function onGce(callable $httpHandler = null, array $cacheConfig = null, CacheItemPoolInterface $cache = null)
+    private static function onGce(?callable $httpHandler = null, ?array $cacheConfig = null, ?CacheItemPoolInterface $cache = null)
     {
         $gceCacheConfig = [];
         foreach (['lifetime', 'prefix'] as $key) {
