@@ -697,81 +697,6 @@
             "install-path": "../guzzlehttp/psr7"
         },
         {
-            "name": "martin-hughes/auryn",
-            "version": "v1.4.8",
-            "version_normalized": "1.4.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/martin-hughes/auryn.git",
-                "reference": "a612e2340e59928a0c68887d9a9b9ecbbed2f176"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/martin-hughes/auryn/zipball/a612e2340e59928a0c68887d9a9b9ecbbed2f176",
-                "reference": "a612e2340e59928a0c68887d9a9b9ecbbed2f176",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4.0 <=8.4"
-            },
-            "replace": {
-                "rdlowrey/auryn": "1.4.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.6"
-            },
-            "time": "2024-10-07T20:22:38+00:00",
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "Auryn\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Lowrey",
-                    "email": "rdlowrey@gmail.com",
-                    "homepage": "https://github.com/rdlowrey",
-                    "role": "Creator / Main Developer"
-                },
-                {
-                    "name": "Levi Morrison",
-                    "email": "levim@php.net",
-                    "homepage": "http://morrisonlevi.github.com/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Dan Ackroyd",
-                    "email": "Danack@basereality.com",
-                    "homepage": "http://www.basereality.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Martin Hughes",
-                    "email": "martin-hughes@users.noreply.github.com",
-                    "homepage": "https://github.com/martin-hughes",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Auryn is a dependency injector for bootstrapping object-oriented PHP applications.",
-            "homepage": "https://github.com/martin-hughes/auryn",
-            "keywords": [
-                "dependency injection",
-                "dic",
-                "ioc"
-            ],
-            "support": {
-                "issues": "https://github.com/martin-hughes/auryn/issues",
-                "source": "https://github.com/martin-hughes/auryn/tree/v1.4.8"
-            },
-            "install-path": "../martin-hughes/auryn"
-        },
-        {
             "name": "monolog/monolog",
             "version": "2.10.0",
             "version_normalized": "2.10.0.0",
@@ -1596,26 +1521,26 @@
         },
         {
             "name": "sniccowp/php-scoper-wordpress-excludes",
-            "version": "6.7.1",
-            "version_normalized": "6.7.1.0",
+            "version": "6.7.2",
+            "version_normalized": "6.7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snicco/php-scoper-wordpress-excludes.git",
-                "reference": "d8e6b5fdc9e42300a8ab18b44b775836a7b52363"
+                "reference": "1e65b207d6f4753904774430ccfc06cb6bfa486e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/d8e6b5fdc9e42300a8ab18b44b775836a7b52363",
-                "reference": "d8e6b5fdc9e42300a8ab18b44b775836a7b52363",
+                "url": "https://api.github.com/repos/snicco/php-scoper-wordpress-excludes/zipball/1e65b207d6f4753904774430ccfc06cb6bfa486e",
+                "reference": "1e65b207d6f4753904774430ccfc06cb6bfa486e",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.4",
                 "php-stubs/wordpress-globals": "0.2.0",
-                "php-stubs/wordpress-stubs": "6.7.1",
+                "php-stubs/wordpress-stubs": "6.7.2",
                 "sniccowp/php-scoper-excludes": "dev-master"
             },
-            "time": "2024-11-25T00:31:50+00:00",
+            "time": "2025-02-06T00:29:24+00:00",
             "type": "library",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -1640,7 +1565,7 @@
             ],
             "support": {
                 "issues": "https://github.com/snicco/php-scoper-wordpress-excludes/issues",
-                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.7.1"
+                "source": "https://github.com/snicco/php-scoper-wordpress-excludes/tree/6.7.2"
             },
             "install-path": "../sniccowp/php-scoper-wordpress-excludes"
         },

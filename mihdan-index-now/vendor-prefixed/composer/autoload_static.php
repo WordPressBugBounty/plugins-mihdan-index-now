@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit505fb7325629e4b16b178e1cafe47dfa
+class ComposerStaticInit818dc4b4ea8254466c6d605aca4aeb3d
 {
     public static $files = array (
         '5dacd636a42e9963ba0cc7648abbee40' => __DIR__ . '/../..' . '/vendor-prefixed/ralouphie/getallheaders/src/getallheaders.php',
@@ -40,17 +40,6 @@ class ComposerStaticInit505fb7325629e4b16b178e1cafe47dfa
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Mihdan\\IndexNow\\Dependencies\\Attribute' => __DIR__ . '/../..' . '/vendor-prefixed/symfony/polyfill-php80/Resources/stubs/Attribute.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\CachingReflector' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/CachingReflector.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\ConfigException' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/ConfigException.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\Executable' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/Executable.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\InjectionException' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/InjectionException.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\Injector' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/Injector.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\InjectorException' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/InjectorException.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\ReflectionCache' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/ReflectionCache.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\ReflectionCacheApc' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/ReflectionCacheApc.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\ReflectionCacheArray' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/ReflectionCacheArray.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\Reflector' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/Reflector.php',
-        'Mihdan\\IndexNow\\Dependencies\\Auryn\\StandardReflector' => __DIR__ . '/../..' . '/vendor-prefixed/martin-hughes/auryn/lib/StandardReflector.php',
         'Mihdan\\IndexNow\\Dependencies\\Carbon\\AbstractTranslator' => __DIR__ . '/../..' . '/vendor-prefixed/nesbot/carbon/src/Carbon/AbstractTranslator.php',
         'Mihdan\\IndexNow\\Dependencies\\Carbon\\Carbon' => __DIR__ . '/../..' . '/vendor-prefixed/nesbot/carbon/src/Carbon/Carbon.php',
         'Mihdan\\IndexNow\\Dependencies\\Carbon\\CarbonConverterInterface' => __DIR__ . '/../..' . '/vendor-prefixed/nesbot/carbon/src/Carbon/CarbonConverterInterface.php',
@@ -957,9 +946,9 @@ class ComposerStaticInit505fb7325629e4b16b178e1cafe47dfa
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit505fb7325629e4b16b178e1cafe47dfa::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit505fb7325629e4b16b178e1cafe47dfa::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit505fb7325629e4b16b178e1cafe47dfa::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit818dc4b4ea8254466c6d605aca4aeb3d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit818dc4b4ea8254466c6d605aca4aeb3d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit818dc4b4ea8254466c6d605aca4aeb3d::$classMap;
 
         }, null, ClassLoader::class);
     }
