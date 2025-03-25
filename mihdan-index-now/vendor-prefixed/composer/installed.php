@@ -3,7 +3,7 @@
         'name' => 'mihdan/index-now',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'dea74dedaa742c08cb42405be2d318a113a39489',
+        'reference' => 'da9c842c435cd978ef51f42b331ffa56cc266205',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -94,7 +94,7 @@
         'mihdan/index-now' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'dea74dedaa742c08cb42405be2d318a113a39489',
+            'reference' => 'da9c842c435cd978ef51f42b331ffa56cc266205',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
