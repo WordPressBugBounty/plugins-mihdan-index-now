@@ -31,6 +31,7 @@ abstract class PublicKeyLoader
      * @return AsymmetricKey
      * @param string|array $key
      * @param string $password optional
+     * @throws NoKeyLoadedException if key is not valid
      */
     public static function load($key, $password = \false)
     {

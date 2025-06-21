@@ -3,8 +3,8 @@ Contributors: collizo4sky, properfraction
 Donate link: https://crawlwp.com/
 Tags: seo, indexing, yandex, bing, google
 Requires at least: 5.9
-Tested up to: 6.7
-Stable tag: 3.0.6.2
+Tested up to: 6.8
+Stable tag: 3.0.8
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -46,7 +46,7 @@ IndexNow is a protocol that allows website owners to promptly notify search engi
 
 ### Premium Features ###
 
-* **SEO Performance Tracking**: Deep Google Search Console integration for detailed insights about your site's search visibility and performance. [Learn more](https://crawlwp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion#features)
+* **SEO Performance Tracking**: Deep Google Search Console and Bing Wenmaster Tools integration for detailed insights about your site's search visibility and performance. [Learn more](https://crawlwp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion#features)
 * **Keyword Tracking**: Monitor the performance of the keywords for which your website ranks using precise data instead of estimates. [Learn more](https://crawlwp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion#features)
 * **Manual Submission:** You can manually submit specific WordPress posts and pages for indexing. [Learn more](https://crawlwp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion#features)
 * **Real-time Indexing Status**: Monitor when search engines discover and index your pages. [Learn more](https://crawlwp.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion#features)
@@ -123,39 +123,15 @@ Sitemaps help webmasters inform search engines about their WordPress pages, but 
 
 == Changelog ==
 
+= 3.0.8 =
+* Added effective 4XX error handling.
+* Premium: Added [Bing support to SEO Stats](https://crawlwp.com/article/overview-of-seo-stats-feature/?ref=changelog).
+
+= 3.0.7 =
+* Improvement: Indexnow pinging will be halted for few hours when on API rate-limit.
+
 = 3.0.6.2 =
 * Fixed error with previous update
-
-= 3.0.6.1 =
-* Removed shogun class.
-
-= 3.0.6 =
-* Fixed Function _load_textdomain_just_in_time was called incorrectly
-* Added crawlwp_normalized_new_url filter to change site URL.
-
-= 3.0.5 =
-* Fixed error with Cron job dispatching.
-* Enhancement: Delay index ping for 24hrs if API rate-limit is hit.
-* Fixed bug where index pinging can happen without saved API credentials.
-
-= 3.0.4 =
-* Fixed bug where admin notice was not shown after saving settings.
-* Fixed background processing not working for some sites.
-* Fixed screen-option and profile-admin menu dropdown clash.
-
-= 3.0.3 =
-* Set Cron interval to 1min to quicken background task processing.
-
-= 3.0.2 =
-* Added site verification feature.
-
-= 3.0.1 =
-* Fixed link to documentation.
-
-= 3.0.0 =
-* Redesigned admin page.
-* Premium Feature: [SEO Stats](https://crawlwp.com/?ref=changelog#features)
-* Premium Feature: [SEO Indexing](https://crawlwp.com/?ref=changelog#features)
 
 See the [changelog file](https://plugins.svn.wordpress.org/mihdan-index-now/trunk/changelog.txt) for complete change log information.
 
