@@ -85,7 +85,7 @@ abstract class Base extends BCMath
      */
     protected static function multiplyReduce($x, $y, $n, $class)
     {
-        return static::reduce(\bcmul($x, $y), $n);
+        return static::reduce(\bcmul($x, $y, 0), $n);
     }
     /**
      * Modular square
@@ -98,6 +98,6 @@ abstract class Base extends BCMath
      */
     protected static function squareReduce($x, $n, $class)
     {
-        return static::reduce(\bcmul($x, $x), $n);
+        return static::reduce(\bcmul($x, $x, 0), $n);
     }
 }
