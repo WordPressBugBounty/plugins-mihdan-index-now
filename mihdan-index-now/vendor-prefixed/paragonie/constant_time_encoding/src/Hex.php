@@ -4,7 +4,14 @@ declare (strict_types=1);
 namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
 
 use RangeException;
+use SensitiveParameter;
+use SodiumException;
 use TypeError;
+use function extension_loaded;
+use function pack;
+use function sodium_bin2hex;
+use function sodium_hex2bin;
+use function unpack;
 /**
  *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
  *  Copyright (c) 2014 Steve "Sc00bz" Thomas (steve at tobtu dot com)
@@ -42,16 +49,23 @@ abstract class Hex implements EncoderInterface
      * @return string
      * @throws TypeError
      */
-    public static function encode(#[\SensitiveParameter] string $binString) : string
+    public static function encode(#[SensitiveParameter] string $binString) : string
     {
+        if (extension_loaded('sodium')) {
+            try {
+                return sodium_bin2hex($binString);
+            } catch (SodiumException $ex) {
+                throw new RangeException($ex->getMessage(), $ex->getCode(), $ex);
+            }
+        }
         $hex = '';
         $len = Binary::safeStrlen($binString);
         for ($i = 0; $i < $len; ++$i) {
             /** @var array<int, int> $chunk */
-            $chunk = \unpack('C', $binString[$i]);
+            $chunk = unpack('C', $binString[$i]);
             $c = $chunk[1] & 0xf;
             $b = $chunk[1] >> 4;
-            $hex .= \pack('CC', 87 + $b + ($b - 10 >> 8 & ~38), 87 + $c + ($c - 10 >> 8 & ~38));
+            $hex .= pack('CC', 87 + $b + ($b - 10 >> 8 & ~38), 87 + $c + ($c - 10 >> 8 & ~38));
         }
         return $hex;
     }
@@ -63,16 +77,16 @@ abstract class Hex implements EncoderInterface
      * @return string
      * @throws TypeError
      */
-    public static function encodeUpper(#[\SensitiveParameter] string $binString) : string
+    public static function encodeUpper(#[SensitiveParameter] string $binString) : string
     {
         $hex = '';
         $len = Binary::safeStrlen($binString);
         for ($i = 0; $i < $len; ++$i) {
             /** @var array<int, int> $chunk */
-            $chunk = \unpack('C', $binString[$i]);
+            $chunk = unpack('C', $binString[$i]);
             $c = $chunk[1] & 0xf;
             $b = $chunk[1] >> 4;
-            $hex .= \pack('CC', 55 + $b + ($b - 10 >> 8 & ~6), 55 + $c + ($c - 10 >> 8 & ~6));
+            $hex .= pack('CC', 55 + $b + ($b - 10 >> 8 & ~6), 55 + $c + ($c - 10 >> 8 & ~6));
         }
         return $hex;
     }
@@ -85,8 +99,15 @@ abstract class Hex implements EncoderInterface
      * @return string (raw binary)
      * @throws RangeException
      */
-    public static function decode(#[\SensitiveParameter] string $encodedString, bool $strictPadding = \false) : string
+    public static function decode(#[SensitiveParameter] string $encodedString, bool $strictPadding = \false) : string
     {
+        if (extension_loaded('sodium') && $strictPadding) {
+            try {
+                return sodium_hex2bin($encodedString);
+            } catch (SodiumException $ex) {
+                throw new RangeException($ex->getMessage(), $ex->getCode(), $ex);
+            }
+        }
         $hex_pos = 0;
         $bin = '';
         $c_acc = 0;
@@ -101,7 +122,7 @@ abstract class Hex implements EncoderInterface
             }
         }
         /** @var array<int, int> $chunk */
-        $chunk = \unpack('C*', $encodedString);
+        $chunk = unpack('C*', $encodedString);
         while ($hex_pos < $hex_len) {
             ++$hex_pos;
             $c = $chunk[$hex_pos];
@@ -116,7 +137,7 @@ abstract class Hex implements EncoderInterface
             if ($state === 0) {
                 $c_acc = $c_val * 16;
             } else {
-                $bin .= \pack('C', $c_acc | $c_val);
+                $bin .= pack('C', $c_acc | $c_val);
             }
             $state ^= 1;
         }
