@@ -902,6 +902,7 @@ return array(
     'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Math\\Common\\FiniteField\\Integer' => $baseDir . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Math/Common/FiniteField/Integer.php',
     'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Math\\PrimeField' => $baseDir . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Math/PrimeField.php',
     'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Math\\PrimeField\\Integer' => $baseDir . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Math/PrimeField/Integer.php',
+    'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Net\\SCP' => $baseDir . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Net/SCP.php',
     'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Net\\SFTP' => $baseDir . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Net/SFTP.php',
     'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Net\\SFTP\\Stream' => $baseDir . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Net/SFTP/Stream.php',
     'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Net\\SSH2' => $baseDir . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Net/SSH2.php',

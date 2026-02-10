@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CrawlWP SEO - Instant Indexing & SEO Insights
  * Description: SEO plugin for indexing WordPress content and monitoring search engine performance.
- * Version: 3.0.11
+ * Version: 3.0.12
  * Author: CrawlWP SEO Team
  * Author URI: https://crawlwp.com/
  * Plugin URI: https://crawlwp.com/
@@ -20,7 +20,7 @@ if ( ! defined('ABSPATH')) {
 
 require_once __DIR__ . '/vendor-prefixed/autoload.php';
 
-define('MIHDAN_INDEX_NOW_VERSION', '3.0.11');
+define('MIHDAN_INDEX_NOW_VERSION', '3.0.12');
 define('MIHDAN_INDEX_NOW_SLUG', 'mihdan-index-now');
 define('MIHDAN_INDEX_NOW_PREFIX', 'mihdan_index_now');
 define('MIHDAN_INDEX_NOW_NAME', 'CrawlWP');
@@ -31,10 +31,12 @@ define('MIHDAN_INDEX_NOW_URL', plugin_dir_url(__FILE__));
 
 define('MIHDAN_INDEX_NOW_SETTINGS_URL', admin_url('admin.php?page=' . MIHDAN_INDEX_NOW_SLUG));
 define('MIHDAN_INDEX_NOW_API_SETTINGS_URL', add_query_arg(['wposa-menu' => Utils::get_plugin_prefix() . '_api_settings'], MIHDAN_INDEX_NOW_SETTINGS_URL));
+define('MIHDAN_INDEX_NOW_ADVANCED_SETTINGS_URL', add_query_arg(['wposa-menu' => Utils::get_plugin_prefix() . '_core_settings'], MIHDAN_INDEX_NOW_SETTINGS_URL));
 
 define('CRAWLWP_PRO_SEO_INDEX_SLUG', 'mihdan-seo-index');
 define('CRAWLWP_PRO_SEO_STAT_SLUG', 'mihdan-seo-stats');
 define('CRAWLWP_PRO_AUTO_INDEX_PAGE', admin_url('admin.php?page=' . CRAWLWP_PRO_SEO_INDEX_SLUG));
+define('CRAWLWP_PRO_AUTO_INDEX_PAGE_RECENT_MOVEMENT', add_query_arg(['section' => 'recent-movement'], CRAWLWP_PRO_AUTO_INDEX_PAGE));
 define('CRAWLWP_PRO_SEO_STAT_PAGE', admin_url('admin.php?page=' . CRAWLWP_PRO_SEO_STAT_SLUG));
 
 do_action('crawlwp_lite_pre_init');

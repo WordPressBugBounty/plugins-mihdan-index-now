@@ -15,23 +15,23 @@ class ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4
     );
 
     public static $prefixLengthsPsr4 = array (
-        'w' => 
+        'w' =>
         array (
             'writecrow\\CountryCodeConverter\\' => 31,
         ),
-        'M' => 
+        'M' =>
         array (
             'Mihdan\\IndexNow\\' => 16,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'writecrow\\CountryCodeConverter\\' => 
+        'writecrow\\CountryCodeConverter\\' =>
         array (
             0 => __DIR__ . '/..' . '/writecrow/country_code_converter/src',
             1 => __DIR__ . '/..' . '/writecrow/country_code_converter/test',
         ),
-        'Mihdan\\IndexNow\\' => 
+        'Mihdan\\IndexNow\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -934,6 +934,7 @@ class ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4
         'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Math\\Common\\FiniteField\\Integer' => __DIR__ . '/../..' . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Math/Common/FiniteField/Integer.php',
         'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Math\\PrimeField' => __DIR__ . '/../..' . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Math/PrimeField.php',
         'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Math\\PrimeField\\Integer' => __DIR__ . '/../..' . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Math/PrimeField/Integer.php',
+        'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Net\\SCP' => __DIR__ . '/../..' . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Net/SCP.php',
         'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Net\\SFTP' => __DIR__ . '/../..' . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Net/SFTP.php',
         'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Net\\SFTP\\Stream' => __DIR__ . '/../..' . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Net/SFTP/Stream.php',
         'Mihdan\\IndexNow\\Dependencies\\phpseclib3\\Net\\SSH2' => __DIR__ . '/../..' . '/vendor-prefixed/phpseclib/phpseclib/phpseclib/Net/SSH2.php',

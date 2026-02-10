@@ -71,6 +71,7 @@ class SignalHandler
      */
     public function handleSignal(int $signo, $siginfo = null) : void
     {
+        /** @var array<int, string> $signals */
         static $signals = [];
         if (!$signals && \extension_loaded('pcntl')) {
             $pcntl = new ReflectionExtension('pcntl');

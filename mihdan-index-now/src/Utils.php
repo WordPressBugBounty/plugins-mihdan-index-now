@@ -313,7 +313,7 @@ class Utils
 		$protocol = 'http://';
 
 		if ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1))
-		    || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+			|| (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
 		) {
 			$protocol = 'https://';
 		}
@@ -334,8 +334,10 @@ class Utils
 		}
 	}
 
-	public static function wposa_get_option($option, $section, $default = '', $prefix = 'mihdan_index_now')
+	public static function wposa_get_option($option, $section, $default = '', $prefix = '')
 	{
+		if (empty($prefix)) $prefix = self::get_plugin_prefix();
+
 		$section = str_replace($prefix . '_', '', $section);
 
 		$options = get_option($prefix . '_' . $section);
@@ -353,5 +355,46 @@ class Utils
 	public static function get_logger()
 	{
 		return new Logger();
+	}
+
+	public static function content_http_redirect($myURL)
+	{
+		?>
+		<script type="text/javascript">
+			window.location.href = "<?php echo $myURL;?>"
+		</script>
+		<meta http-equiv="refresh" content="0; url=<?php echo $myURL; ?>">
+		Please wait while you are redirected...or
+		<a href="<?php echo $myURL; ?>">Click Here</a> if you do not want to wait.
+		<?php
+	}
+
+	public static function do_admin_redirect($url)
+	{
+		if ( ! headers_sent()) {
+			wp_safe_redirect($url);
+			exit;
+		}
+
+		self::content_http_redirect($url);
+	}
+
+	public static function minify_css($buffer)
+	{
+		$buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+		$buffer = str_replace(': ', ':', $buffer);
+
+		return str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+	}
+
+	public static function local_datetime_to_utc($date, $format = 'Y-m-d H:i:s')
+	{
+		try {
+			return (new \DateTimeImmutable($date, wp_timezone()))
+				->setTimezone(new \DateTimeZone('UTC'))
+				->format($format);
+		} catch (\Exception $e) {
+			return false;
+		}
 	}
 }
