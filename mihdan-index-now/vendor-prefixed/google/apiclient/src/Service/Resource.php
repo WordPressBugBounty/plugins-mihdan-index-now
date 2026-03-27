@@ -35,6 +35,8 @@ class Resource
     private $stackParameters = ['alt' => ['type' => 'string', 'location' => 'query'], 'fields' => ['type' => 'string', 'location' => 'query'], 'trace' => ['type' => 'string', 'location' => 'query'], 'userIp' => ['type' => 'string', 'location' => 'query'], 'quotaUser' => ['type' => 'string', 'location' => 'query'], 'data' => ['type' => 'string', 'location' => 'body'], 'mimeType' => ['type' => 'string', 'location' => 'header'], 'uploadType' => ['type' => 'string', 'location' => 'query'], 'mediaUpload' => ['type' => 'complex', 'location' => 'query'], 'prettyPrint' => ['type' => 'string', 'location' => 'query']];
     /** @var string $rootUrlTemplate */
     private $rootUrlTemplate;
+    /** @var string $apiVersion */
+    protected $apiVersion;
     /** @var \Google\Client $client */
     private $client;
     /** @var string $serviceName */
@@ -140,6 +142,11 @@ class Resource
         // rather than using an expected class
         if (isset($parameters['alt']) && $parameters['alt']['value'] == 'media') {
             $expectedClass = null;
+        }
+        // If the class which is extending from this one contains
+        // an Api Version, add it to the header
+        if ($this->apiVersion) {
+            $request = $request->withHeader('X-Goog-Api-Version', $this->apiVersion);
         }
         // if the client is marked for deferring, rather than
         // execute the request, return the response

@@ -4,10 +4,14 @@ declare (strict_types=1);
 namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
 
 use InvalidArgumentException;
+use Mihdan\IndexNow\Dependencies\Override;
 use RangeException;
 use SensitiveParameter;
 use TypeError;
 use function pack;
+use function rtrim;
+use function strlen;
+use function substr;
 use function unpack;
 /**
  *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
@@ -47,6 +51,7 @@ abstract class Base32 implements EncoderInterface
      * @param bool $strictPadding
      * @return string
      */
+    #[Override]
     public static function decode(#[SensitiveParameter] string $encodedString, bool $strictPadding = \false) : string
     {
         return static::doDecode($encodedString, \false, $strictPadding);
@@ -69,6 +74,7 @@ abstract class Base32 implements EncoderInterface
      * @return string
      * @throws TypeError
      */
+    #[Override]
     public static function encode(#[SensitiveParameter] string $binString) : string
     {
         return static::doEncode($binString, \false, \true);
@@ -79,6 +85,7 @@ abstract class Base32 implements EncoderInterface
      * @param string $src
      * @return string
      * @throws TypeError
+     * @api
      */
     public static function encodeUnpadded(#[SensitiveParameter] string $src) : string
     {
@@ -90,6 +97,7 @@ abstract class Base32 implements EncoderInterface
      * @param string $src
      * @return string
      * @throws TypeError
+     * @api
      */
     public static function encodeUpper(#[SensitiveParameter] string $src) : string
     {
@@ -101,6 +109,7 @@ abstract class Base32 implements EncoderInterface
      * @param string $src
      * @return string
      * @throws TypeError
+     * @api
      */
     public static function encodeUpperUnpadded(#[SensitiveParameter] string $src) : string
     {
@@ -112,6 +121,7 @@ abstract class Base32 implements EncoderInterface
      *
      * @param int $src
      * @return int
+     * @api
      */
     protected static function decode5Bits(int $src) : int
     {
@@ -130,6 +140,7 @@ abstract class Base32 implements EncoderInterface
      *
      * @param int $src
      * @return int
+     * @api
      */
     protected static function decode5BitsUpper(int $src) : int
     {
@@ -146,6 +157,7 @@ abstract class Base32 implements EncoderInterface
      *
      * @param int $src
      * @return string
+     * @api
      */
     protected static function encode5Bits(int $src) : string
     {
@@ -162,6 +174,7 @@ abstract class Base32 implements EncoderInterface
      *
      * @param int $src
      * @return string
+     * @api
      */
     protected static function encode5BitsUpper(int $src) : string
     {
@@ -174,10 +187,11 @@ abstract class Base32 implements EncoderInterface
      * @param string $encodedString
      * @param bool $upper
      * @return string
+     * @api
      */
     public static function decodeNoPadding(#[SensitiveParameter] string $encodedString, bool $upper = \false) : string
     {
-        $srcLen = Binary::safeStrlen($encodedString);
+        $srcLen = strlen($encodedString);
         if ($srcLen === 0) {
             return '';
         }
@@ -205,7 +219,7 @@ abstract class Base32 implements EncoderInterface
         // We do this to reduce code duplication:
         $method = $upper ? 'decode5BitsUpper' : 'decode5Bits';
         // Remove padding
-        $srcLen = Binary::safeStrlen($src);
+        $srcLen = strlen($src);
         if ($srcLen === 0) {
             return '';
         }
@@ -223,15 +237,15 @@ abstract class Base32 implements EncoderInterface
                 throw new RangeException('Incorrect padding');
             }
         } else {
-            $src = \rtrim($src, '=');
-            $srcLen = Binary::safeStrlen($src);
+            $src = rtrim($src, '=');
+            $srcLen = strlen($src);
         }
         $err = 0;
         $dest = '';
         // Main loop (no padding):
         for ($i = 0; $i + 8 <= $srcLen; $i += 8) {
             /** @var array<int, int> $chunk */
-            $chunk = unpack('C*', Binary::safeSubstr($src, $i, 8));
+            $chunk = unpack('C*', substr($src, $i, 8));
             /** @var int $c0 */
             $c0 = static::$method($chunk[1]);
             /** @var int $c1 */
@@ -254,7 +268,7 @@ abstract class Base32 implements EncoderInterface
         // The last chunk, which may have padding:
         if ($i < $srcLen) {
             /** @var array<int, int> $chunk */
-            $chunk = unpack('C*', Binary::safeSubstr($src, $i, $srcLen - $i));
+            $chunk = unpack('C*', substr($src, $i, $srcLen - $i));
             /** @var int $c0 */
             $c0 = static::$method($chunk[1]);
             if ($i + 6 < $srcLen) {
@@ -352,16 +366,16 @@ abstract class Base32 implements EncoderInterface
      * @return string
      * @throws TypeError
      */
-    protected static function doEncode(#[SensitiveParameter] string $src, bool $upper = \false, $pad = \true) : string
+    protected static function doEncode(#[SensitiveParameter] string $src, bool $upper = \false, bool $pad = \true) : string
     {
         // We do this to reduce code duplication:
         $method = $upper ? 'encode5BitsUpper' : 'encode5Bits';
         $dest = '';
-        $srcLen = Binary::safeStrlen($src);
+        $srcLen = strlen($src);
         // Main loop (no padding):
         for ($i = 0; $i + 5 <= $srcLen; $i += 5) {
             /** @var array<int, int> $chunk */
-            $chunk = unpack('C*', Binary::safeSubstr($src, $i, 5));
+            $chunk = unpack('C*', substr($src, $i, 5));
             $b0 = $chunk[1];
             $b1 = $chunk[2];
             $b2 = $chunk[3];
@@ -372,7 +386,7 @@ abstract class Base32 implements EncoderInterface
         // The last chunk, which may have padding:
         if ($i < $srcLen) {
             /** @var array<int, int> $chunk */
-            $chunk = unpack('C*', Binary::safeSubstr($src, $i, $srcLen - $i));
+            $chunk = unpack('C*', substr($src, $i, $srcLen - $i));
             $b0 = $chunk[1];
             if ($i + 3 < $srcLen) {
                 $b1 = $chunk[2];

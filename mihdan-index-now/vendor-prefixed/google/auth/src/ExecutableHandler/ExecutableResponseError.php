@@ -1,13 +1,13 @@
 <?php
 
-/*
- * Copyright 2023 Google Inc.
+/**
+ * Copyright 2024 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,11 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace Mihdan\IndexNow\Dependencies\Google\Auth;
+namespace Mihdan\IndexNow\Dependencies\Google\Auth\ExecutableHandler;
 
+use Error;
 /** @internal */
-interface ExternalAccountCredentialSourceInterface
+class ExecutableResponseError extends Error
 {
-    public function fetchSubjectToken(callable $httpHandler = null) : string;
-    public function getCacheKey() : ?string;
+    public function __construct(string $message, string $executableErrorCode = 'INVALID_EXECUTABLE_RESPONSE')
+    {
+        parent::__construct(\sprintf('Error code %s: %s', $executableErrorCode, $message));
+    }
 }

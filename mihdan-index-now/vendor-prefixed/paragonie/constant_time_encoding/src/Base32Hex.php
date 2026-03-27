@@ -3,6 +3,7 @@
 declare (strict_types=1);
 namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
 
+use Mihdan\IndexNow\Dependencies\Override;
 use function pack;
 /**
  *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
@@ -42,6 +43,7 @@ abstract class Base32Hex extends Base32
      * @param int $src
      * @return int
      */
+    #[Override]
     protected static function decode5Bits(int $src) : int
     {
         $ret = -1;
@@ -58,6 +60,7 @@ abstract class Base32Hex extends Base32
      * @param int $src
      * @return int
      */
+    #[Override]
     protected static function decode5BitsUpper(int $src) : int
     {
         $ret = -1;
@@ -74,6 +77,7 @@ abstract class Base32Hex extends Base32
      * @param int $src
      * @return string
      */
+    #[Override]
     protected static function encode5Bits(int $src) : string
     {
         $src += 0x30;
@@ -90,6 +94,7 @@ abstract class Base32Hex extends Base32
      * @param int $src
      * @return string
      */
+    #[Override]
     protected static function encode5BitsUpper(int $src) : string
     {
         $src += 0x30;

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4
+class ComposerStaticInit6f8a9af58565738d97624b673fbe1dc0
 {
     public static $files = array (
         '5dacd636a42e9963ba0cc7648abbee40' => __DIR__ . '/../..' . '/vendor-prefixed/ralouphie/getallheaders/src/getallheaders.php',
@@ -143,12 +143,14 @@ class ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\AccessToken' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/AccessToken.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\ApplicationDefaultCredentials' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/ApplicationDefaultCredentials.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\CacheTrait' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/CacheTrait.php',
+        'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Cache\\FileSystemCacheItemPool' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Cache/FileSystemCacheItemPool.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Cache\\InvalidArgumentException' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Cache/InvalidArgumentException.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Cache\\Item' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Cache/Item.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Cache\\MemoryCacheItemPool' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Cache/MemoryCacheItemPool.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Cache\\SysVCacheItemPool' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Cache/SysVCacheItemPool.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Cache\\TypedItem' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Cache/TypedItem.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\CredentialSource\\AwsNativeSource' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/CredentialSource/AwsNativeSource.php',
+        'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\CredentialSource\\ExecutableSource' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/CredentialSource/ExecutableSource.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\CredentialSource\\FileSource' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/CredentialSource/FileSource.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\CredentialSource\\UrlSource' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/CredentialSource/UrlSource.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\CredentialsLoader' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/CredentialsLoader.php',
@@ -161,6 +163,8 @@ class ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Credentials\\ServiceAccountCredentials' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Credentials/ServiceAccountCredentials.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Credentials\\ServiceAccountJwtAccessCredentials' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Credentials/ServiceAccountJwtAccessCredentials.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Credentials\\UserRefreshCredentials' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Credentials/UserRefreshCredentials.php',
+        'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\ExecutableHandler\\ExecutableHandler' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/ExecutableHandler/ExecutableHandler.php',
+        'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\ExecutableHandler\\ExecutableResponseError' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/ExecutableHandler/ExecutableResponseError.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\ExternalAccountCredentialSourceInterface' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/ExternalAccountCredentialSourceInterface.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\FetchAuthTokenCache' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/FetchAuthTokenCache.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\FetchAuthTokenInterface' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/FetchAuthTokenInterface.php',
@@ -173,6 +177,7 @@ class ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\HttpHandler\\HttpHandlerFactory' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/HttpHandler/HttpHandlerFactory.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Iam' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Iam.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\IamSignerTrait' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/IamSignerTrait.php',
+        'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\MetricsTrait' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/MetricsTrait.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Middleware\\AuthTokenMiddleware' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Middleware/AuthTokenMiddleware.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Middleware\\ProxyAuthTokenMiddleware' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Middleware/ProxyAuthTokenMiddleware.php',
         'Mihdan\\IndexNow\\Dependencies\\Google\\Auth\\Middleware\\ScopedAccessTokenMiddleware' => __DIR__ . '/../..' . '/vendor-prefixed/google/auth/src/Middleware/ScopedAccessTokenMiddleware.php',
@@ -947,9 +952,9 @@ class ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit1c7ed7900c2488b0b0ddf5841bb95dd4::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6f8a9af58565738d97624b673fbe1dc0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6f8a9af58565738d97624b673fbe1dc0::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit6f8a9af58565738d97624b673fbe1dc0::$classMap;
 
         }, null, ClassLoader::class);
     }

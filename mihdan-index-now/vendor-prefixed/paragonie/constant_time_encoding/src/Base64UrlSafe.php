@@ -3,7 +3,7 @@
 declare (strict_types=1);
 namespace Mihdan\IndexNow\Dependencies\ParagonIE\ConstantTime;
 
-use function pack;
+use Mihdan\IndexNow\Dependencies\Override;
 /**
  *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
  *  Copyright (c) 2014 Steve "Sc00bz" Thomas (steve at tobtu dot com)
@@ -46,6 +46,7 @@ abstract class Base64UrlSafe extends Base64
      * @param int $src
      * @return int
      */
+    #[Override]
     protected static function decode6Bits(int $src) : int
     {
         $ret = -1;
@@ -68,6 +69,7 @@ abstract class Base64UrlSafe extends Base64
      * @param int $src
      * @return string
      */
+    #[Override]
     protected static function encode6Bits(int $src) : string
     {
         $diff = 0x41;
@@ -79,6 +81,6 @@ abstract class Base64UrlSafe extends Base64
         $diff -= 61 - $src >> 8 & 13;
         // if ($src > 62) $diff += 0x5f - 0x2b - 1; // 3
         $diff += 62 - $src >> 8 & 49;
-        return pack('C', $src + $diff);
+        return \pack('C', $src + $diff);
     }
 }

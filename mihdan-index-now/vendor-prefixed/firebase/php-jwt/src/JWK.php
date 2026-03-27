@@ -50,7 +50,7 @@ class JWK
      *
      * @uses parseKey
      */
-    public static function parseKeySet(array $jwks, string $defaultAlg = null) : array
+    public static function parseKeySet(array $jwks, ?string $defaultAlg = null) : array
     {
         $keys = [];
         if (!isset($jwks['keys'])) {
@@ -85,7 +85,7 @@ class JWK
      *
      * @uses createPemFromModulusAndExponent
      */
-    public static function parseKey(array $jwk, string $defaultAlg = null) : ?Key
+    public static function parseKey(array $jwk, ?string $defaultAlg = null) : ?Key
     {
         if (empty($jwk)) {
             throw new InvalidArgumentException('JWK must not be empty');
@@ -150,6 +150,11 @@ class JWK
                 // This library works internally with EdDSA keys (Ed25519) encoded in standard base64.
                 $publicKey = JWT::convertBase64urlToBase64($jwk['x']);
                 return new Key($publicKey, $jwk['alg']);
+            case 'oct':
+                if (!isset($jwk['k'])) {
+                    throw new UnexpectedValueException('k not set');
+                }
+                return new Key(JWT::urlsafeB64Decode($jwk['k']), $jwk['alg']);
             default:
                 break;
         }

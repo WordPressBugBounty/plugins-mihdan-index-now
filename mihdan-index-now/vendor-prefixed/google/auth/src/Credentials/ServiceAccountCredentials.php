@@ -62,6 +62,12 @@ class ServiceAccountCredentials extends CredentialsLoader implements GetQuotaPro
 {
     use ServiceAccountSignerTrait;
     /**
+     * Used in observability metric headers
+     *
+     * @var string
+     */
+    private const CRED_TYPE = 'sa';
+    /**
      * The OAuth2 instance used to conduct authorization.
      *
      * @var OAuth2
@@ -159,7 +165,7 @@ class ServiceAccountCredentials extends CredentialsLoader implements GetQuotaPro
      *     @type string $token_type
      * }
      */
-    public function fetchAuthToken(?callable $httpHandler = null)
+    public function fetchAuthToken(callable $httpHandler = null)
     {
         if ($this->useSelfSignedJwt()) {
             $jwtCreds = $this->createJwtAccessCredentials();
@@ -170,16 +176,26 @@ class ServiceAccountCredentials extends CredentialsLoader implements GetQuotaPro
             }
             return $accessToken;
         }
-        return $this->auth->fetchAuthToken($httpHandler);
+        $authRequestType = empty($this->auth->getAdditionalClaims()['target_audience']) ? 'at' : 'it';
+        return $this->auth->fetchAuthToken($httpHandler, $this->applyTokenEndpointMetrics([], $authRequestType));
     }
     /**
+     * Return the Cache Key for the credentials.
+     * For the cache key format is one of the following:
+     * ClientEmail.Scope[.Sub]
+     * ClientEmail.Audience[.Sub]
+     *
      * @return string
      */
     public function getCacheKey()
     {
-        $key = $this->auth->getIssuer() . ':' . $this->auth->getCacheKey();
+        $scopeOrAudience = $this->auth->getScope();
+        if (!$scopeOrAudience) {
+            $scopeOrAudience = $this->auth->getAudience();
+        }
+        $key = $this->auth->getIssuer() . '.' . $scopeOrAudience;
         if ($sub = $this->auth->getSub()) {
-            $key .= ':' . $sub;
+            $key .= '.' . $sub;
         }
         return $key;
     }
@@ -200,7 +216,7 @@ class ServiceAccountCredentials extends CredentialsLoader implements GetQuotaPro
      * @param callable $httpHandler Not used by this credentials type.
      * @return string|null
      */
-    public function getProjectId(?callable $httpHandler = null)
+    public function getProjectId(callable $httpHandler = null)
     {
         return $this->projectId;
     }
@@ -212,7 +228,7 @@ class ServiceAccountCredentials extends CredentialsLoader implements GetQuotaPro
      * @param callable $httpHandler callback which delivers psr7 request
      * @return array<mixed> updated metadata hashmap
      */
-    public function updateMetadata($metadata, $authUri = null, ?callable $httpHandler = null)
+    public function updateMetadata($metadata, $authUri = null, callable $httpHandler = null)
     {
         // scope exists. use oauth implementation
         if (!$this->useSelfSignedJwt()) {
@@ -260,9 +276,20 @@ class ServiceAccountCredentials extends CredentialsLoader implements GetQuotaPro
      * @param callable $httpHandler Not used by this credentials type.
      * @return string
      */
-    public function getClientName(?callable $httpHandler = null)
+    public function getClientName(callable $httpHandler = null)
     {
         return $this->auth->getIssuer();
+    }
+    /**
+     * Get the private key from the keyfile.
+     *
+     * In this case, it returns the keyfile's private_key key, needed for JWT signing.
+     *
+     * @return string
+     */
+    public function getPrivateKey()
+    {
+        return $this->auth->getSigningKey();
     }
     /**
      * Get the quota project used for this API request
@@ -281,6 +308,10 @@ class ServiceAccountCredentials extends CredentialsLoader implements GetQuotaPro
     public function getUniverseDomain() : string
     {
         return $this->universeDomain;
+    }
+    protected function getCredType() : string
+    {
+        return self::CRED_TYPE;
     }
     /**
      * @return bool

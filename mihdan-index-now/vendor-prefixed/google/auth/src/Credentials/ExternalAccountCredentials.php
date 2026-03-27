@@ -18,8 +18,10 @@
 namespace Mihdan\IndexNow\Dependencies\Google\Auth\Credentials;
 
 use Mihdan\IndexNow\Dependencies\Google\Auth\CredentialSource\AwsNativeSource;
+use Mihdan\IndexNow\Dependencies\Google\Auth\CredentialSource\ExecutableSource;
 use Mihdan\IndexNow\Dependencies\Google\Auth\CredentialSource\FileSource;
 use Mihdan\IndexNow\Dependencies\Google\Auth\CredentialSource\UrlSource;
+use Mihdan\IndexNow\Dependencies\Google\Auth\ExecutableHandler\ExecutableHandler;
 use Mihdan\IndexNow\Dependencies\Google\Auth\ExternalAccountCredentialSourceInterface;
 use Mihdan\IndexNow\Dependencies\Google\Auth\FetchAuthTokenInterface;
 use Mihdan\IndexNow\Dependencies\Google\Auth\GetQuotaProjectInterface;
@@ -69,9 +71,7 @@ class ExternalAccountCredentials implements FetchAuthTokenInterface, UpdateMetad
         if (!\array_key_exists('credential_source', $jsonKey)) {
             throw new InvalidArgumentException('json key is missing the credential_source field');
         }
-        if (\array_key_exists('service_account_impersonation_url', $jsonKey)) {
-            $this->serviceAccountImpersonationUrl = $jsonKey['service_account_impersonation_url'];
-        }
+        $this->serviceAccountImpersonationUrl = $jsonKey['service_account_impersonation_url'] ?? null;
         $this->quotaProject = $jsonKey['quota_project_id'] ?? null;
         $this->workforcePoolUserProject = $jsonKey['workforce_pool_user_project'] ?? null;
         $this->universeDomain = $jsonKey['universe_domain'] ?? GetUniverseDomainInterface::DEFAULT_UNIVERSE_DOMAIN;
@@ -96,9 +96,6 @@ class ExternalAccountCredentials implements FetchAuthTokenInterface, UpdateMetad
             if (!\array_key_exists('regional_cred_verification_url', $credentialSource)) {
                 throw new InvalidArgumentException('The regional_cred_verification_url field is required for aws1 credential source.');
             }
-            if (!\array_key_exists('audience', $jsonKey)) {
-                throw new InvalidArgumentException('aws1 credential source requires an audience to be set in the JSON file.');
-            }
             return new AwsNativeSource(
                 $jsonKey['audience'],
                 $credentialSource['regional_cred_verification_url'],
@@ -113,6 +110,31 @@ class ExternalAccountCredentials implements FetchAuthTokenInterface, UpdateMetad
         if (isset($credentialSource['url'])) {
             return new UrlSource($credentialSource['url'], $credentialSource['format']['type'] ?? null, $credentialSource['format']['subject_token_field_name'] ?? null, $credentialSource['headers'] ?? null);
         }
+        if (isset($credentialSource['executable'])) {
+            if (!\array_key_exists('command', $credentialSource['executable'])) {
+                throw new InvalidArgumentException('executable source requires a command to be set in the JSON file.');
+            }
+            // Build command environment variables
+            $env = [
+                'GOOGLE_EXTERNAL_ACCOUNT_AUDIENCE' => $jsonKey['audience'],
+                'GOOGLE_EXTERNAL_ACCOUNT_TOKEN_TYPE' => $jsonKey['subject_token_type'],
+                // Always set to 0 because interactive mode is not supported.
+                'GOOGLE_EXTERNAL_ACCOUNT_INTERACTIVE' => '0',
+            ];
+            if ($outputFile = $credentialSource['executable']['output_file'] ?? null) {
+                $env['GOOGLE_EXTERNAL_ACCOUNT_OUTPUT_FILE'] = $outputFile;
+            }
+            if ($serviceAccountImpersonationUrl = $jsonKey['service_account_impersonation_url'] ?? null) {
+                // Parse email from URL. The formal looks as follows:
+                // https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/name@project-id.iam.gserviceaccount.com:generateAccessToken
+                $regex = '/serviceAccounts\\/(?<email>[^:]+):generateAccessToken$/';
+                if (\preg_match($regex, $serviceAccountImpersonationUrl, $matches)) {
+                    $env['GOOGLE_EXTERNAL_ACCOUNT_IMPERSONATED_EMAIL'] = $matches['email'];
+                }
+            }
+            $timeoutMs = $credentialSource['executable']['timeout_millis'] ?? null;
+            return new ExecutableSource($credentialSource['executable']['command'], $outputFile, $timeoutMs ? new ExecutableHandler($env, $timeoutMs) : new ExecutableHandler($env));
+        }
         throw new InvalidArgumentException('Unable to determine credential source from json key.');
     }
     /**
@@ -126,7 +148,7 @@ class ExternalAccountCredentials implements FetchAuthTokenInterface, UpdateMetad
      *     @type int $expires_at
      * }
      */
-    private function getImpersonatedAccessToken(string $stsToken, ?callable $httpHandler = null) : array
+    private function getImpersonatedAccessToken(string $stsToken, callable $httpHandler = null) : array
     {
         if (!isset($this->serviceAccountImpersonationUrl)) {
             throw new InvalidArgumentException('service_account_impersonation_url must be set in JSON credentials.');
@@ -152,7 +174,7 @@ class ExternalAccountCredentials implements FetchAuthTokenInterface, UpdateMetad
      *     @type string $token_type (identity pool only)
      * }
      */
-    public function fetchAuthToken(?callable $httpHandler = null)
+    public function fetchAuthToken(callable $httpHandler = null)
     {
         $stsToken = $this->auth->fetchAuthToken($httpHandler);
         if (isset($this->serviceAccountImpersonationUrl)) {
@@ -160,9 +182,22 @@ class ExternalAccountCredentials implements FetchAuthTokenInterface, UpdateMetad
         }
         return $stsToken;
     }
-    public function getCacheKey()
+    /**
+     * Get the cache token key for the credentials.
+     * The cache token key format depends on the type of source
+     * The format for the cache key one of the following:
+     * FetcherCacheKey.Scope.[ServiceAccount].[TokenType].[WorkforcePoolUserProject]
+     * FetcherCacheKey.Audience.[ServiceAccount].[TokenType].[WorkforcePoolUserProject]
+     *
+     * @return ?string;
+     */
+    public function getCacheKey() : ?string
     {
-        return $this->auth->getCacheKey();
+        $scopeOrAudience = $this->auth->getAudience();
+        if (!$scopeOrAudience) {
+            $scopeOrAudience = $this->auth->getScope();
+        }
+        return $this->auth->getSubjectTokenFetcher()->getCacheKey() . '.' . $scopeOrAudience . '.' . ($this->serviceAccountImpersonationUrl ?? '') . '.' . ($this->auth->getSubjectTokenType() ?? '') . '.' . ($this->workforcePoolUserProject ?? '');
     }
     public function getLastReceivedToken()
     {
@@ -195,7 +230,7 @@ class ExternalAccountCredentials implements FetchAuthTokenInterface, UpdateMetad
      *        token. **Defaults to** `null`.
      * @return string|null
      */
-    public function getProjectId(?callable $httpHandler = null, ?string $accessToken = null)
+    public function getProjectId(callable $httpHandler = null, string $accessToken = null)
     {
         if (isset($this->projectId)) {
             return $this->projectId;

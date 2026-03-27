@@ -485,9 +485,11 @@ class OAuth2 implements FetchAuthTokenInterface
      * Generates a request for token credentials.
      *
      * @param callable $httpHandler callback which delivers psr7 request
+     * @param array<mixed> $headers [optional] Additional headers to pass to
+     *        the token endpoint request.
      * @return RequestInterface the authorization Url.
      */
-    public function generateCredentialsRequest(?callable $httpHandler = null)
+    public function generateCredentialsRequest(callable $httpHandler = null, $headers = [])
     {
         $uri = $this->getTokenCredentialUri();
         if (\is_null($uri)) {
@@ -537,21 +539,23 @@ class OAuth2 implements FetchAuthTokenInterface
                 }
                 $params = \array_merge($params, $this->getExtensionParams());
         }
-        $headers = ['Cache-Control' => 'no-store', 'Content-Type' => 'application/x-www-form-urlencoded'];
+        $headers = ['Cache-Control' => 'no-store', 'Content-Type' => 'application/x-www-form-urlencoded'] + $headers;
         return new Request('POST', $uri, $headers, Query::build($params));
     }
     /**
      * Fetches the auth tokens based on the current state.
      *
      * @param callable $httpHandler callback which delivers psr7 request
+     * @param array<mixed> $headers [optional] If present, add these headers to the token
+     *        endpoint request.
      * @return array<mixed> the response
      */
-    public function fetchAuthToken(?callable $httpHandler = null)
+    public function fetchAuthToken(callable $httpHandler = null, $headers = [])
     {
         if (\is_null($httpHandler)) {
             $httpHandler = HttpHandlerFactory::build(HttpClientCache::getHttpClient());
         }
-        $response = $httpHandler($this->generateCredentialsRequest($httpHandler));
+        $response = $httpHandler($this->generateCredentialsRequest($httpHandler, $headers));
         $credentials = $this->parseTokenResponse($response);
         $this->updateToken($credentials);
         if (isset($credentials['scope'])) {
@@ -560,6 +564,8 @@ class OAuth2 implements FetchAuthTokenInterface
         return $credentials;
     }
     /**
+     * @deprecated
+     *
      * Obtains a key that can used to cache the results of #fetchAuthToken.
      *
      * The key is derived from the scopes.
@@ -576,6 +582,15 @@ class OAuth2 implements FetchAuthTokenInterface
         }
         // If scope has not set, return null to indicate no caching.
         return null;
+    }
+    /**
+     * Gets this instance's SubjectTokenFetcher
+     *
+     * @return null|ExternalAccountCredentialSourceInterface
+     */
+    public function getSubjectTokenFetcher() : ?ExternalAccountCredentialSourceInterface
+    {
+        return $this->subjectTokenFetcher;
     }
     /**
      * Parses the fetched tokens.
@@ -833,6 +848,15 @@ class OAuth2 implements FetchAuthTokenInterface
             return $this->scope;
         }
         return \implode(' ', $this->scope);
+    }
+    /**
+     * Gets the subject token type
+     *
+     * @return ?string
+     */
+    public function getSubjectTokenType() : ?string
+    {
+        return $this->subjectTokenType;
     }
     /**
      * Sets the scope of the access request, expressed either as an Array or as
@@ -1406,7 +1430,7 @@ class OAuth2 implements FetchAuthTokenInterface
      * @return string
      * @access private
      */
-    public function getClientName(?callable $httpHandler = null)
+    public function getClientName(callable $httpHandler = null)
     {
         return $this->getClientId();
     }

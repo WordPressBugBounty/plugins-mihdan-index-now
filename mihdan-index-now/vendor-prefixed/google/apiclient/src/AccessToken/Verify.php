@@ -61,7 +61,7 @@ class Verify
      * Instantiates the class, but does not initiate the login flow, leaving it
      * to the discretion of the caller.
      */
-    public function __construct(?ClientInterface $http = null, ?CacheItemPoolInterface $cache = null, $jwt = null)
+    public function __construct(?ClientInterface $http = null, ?CacheItemPoolInterface $cache = null, ?JWT $jwt = null)
     {
         if (null === $http) {
             $http = new Client();
@@ -136,8 +136,8 @@ class Verify
      * Retrieve and cache a certificates file.
      *
      * @param string $url location
-     * @throws \Google\Exception
      * @return array certificates
+     * @throws \Google\Exception
      */
     private function retrieveCertsFromLocation($url)
     {

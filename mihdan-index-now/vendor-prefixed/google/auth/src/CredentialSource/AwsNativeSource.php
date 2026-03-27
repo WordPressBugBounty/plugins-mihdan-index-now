@@ -45,7 +45,7 @@ class AwsNativeSource implements ExternalAccountCredentialSourceInterface
      * @param string|null $imdsv2SessionTokenUrl Presence of this URL enforces the auth libraries to fetch a Session
      *                                           Token from AWS. This field is required for EC2 instances using IMDSv2.
      */
-    public function __construct(string $audience, string $regionalCredVerificationUrl, ?string $regionUrl = null, ?string $securityCredentialsUrl = null, ?string $imdsv2SessionTokenUrl = null)
+    public function __construct(string $audience, string $regionalCredVerificationUrl, string $regionUrl = null, string $securityCredentialsUrl = null, string $imdsv2SessionTokenUrl = null)
     {
         $this->audience = $audience;
         $this->regionalCredVerificationUrl = $regionalCredVerificationUrl;
@@ -53,7 +53,7 @@ class AwsNativeSource implements ExternalAccountCredentialSourceInterface
         $this->securityCredentialsUrl = $securityCredentialsUrl;
         $this->imdsv2SessionTokenUrl = $imdsv2SessionTokenUrl;
     }
-    public function fetchSubjectToken(?callable $httpHandler = null) : string
+    public function fetchSubjectToken(callable $httpHandler = null) : string
     {
         if (\is_null($httpHandler)) {
             $httpHandler = HttpHandlerFactory::build(HttpClientCache::getHttpClient());
@@ -245,6 +245,17 @@ class AwsNativeSource implements ExternalAccountCredentialSourceInterface
             return [$accessKeyId, $secretAccessKey, \getenv('AWS_SESSION_TOKEN') ?: null];
         }
         return null;
+    }
+    /**
+     * Gets the unique key for caching
+     * For AwsNativeSource the values are:
+     * Imdsv2SessionTokenUrl.SecurityCredentialsUrl.RegionUrl.RegionalCredVerificationUrl
+     *
+     * @return string
+     */
+    public function getCacheKey() : string
+    {
+        return ($this->imdsv2SessionTokenUrl ?? '') . '.' . ($this->securityCredentialsUrl ?? '') . '.' . $this->regionUrl . '.' . $this->regionalCredVerificationUrl;
     }
     /**
      * Return HMAC hash in binary string
