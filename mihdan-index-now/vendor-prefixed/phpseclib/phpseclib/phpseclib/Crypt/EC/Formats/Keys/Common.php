@@ -15,6 +15,7 @@ namespace Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\Formats\Keys;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Common\Functions\Strings;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Base as BaseCurve;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Binary as BinaryCurve;
+use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Montgomery;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\Prime as PrimeCurve;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Crypt\EC\BaseCurves\TwistedEdwards as TwistedEdwardsCurve;
 use Mihdan\IndexNow\Dependencies\phpseclib3\Exception\UnsupportedCurveException;
@@ -278,6 +279,9 @@ trait Common
      */
     public static function extractPoint($str, BaseCurve $curve)
     {
+        if ($curve instanceof Montgomery) {
+            return [new BigInteger($str, 256)];
+        }
         if ($curve instanceof TwistedEdwardsCurve) {
             // first step of point deciding as discussed at the following URL's:
             // https://tools.ietf.org/html/rfc8032#section-5.1.3

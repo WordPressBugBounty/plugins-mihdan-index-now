@@ -99,7 +99,6 @@ class Settings
 			}
 		}, 10, 2);
 
-
 		add_filter('admin_body_class', function ($classes) {
 			global $wp_version;
 
@@ -109,7 +108,6 @@ class Settings
 
 			return $classes;
 		});
-
 	}
 
 	public function admin_enqueue_scripts()
@@ -166,6 +164,7 @@ class Settings
 						$pro_features = [
 							esc_html__('Google Search Insights', 'mihdan-index-now'),
 							esc_html__('Bing Search Insights', 'mihdan-index-now'),
+							esc_html__('Yandex Search Insights', 'mihdan-index-now'),
 							esc_html__('Auto Indexing', 'mihdan-index-now'),
 							esc_html__('Index Status Insights', 'mihdan-index-now'),
 							esc_html__('Index History', 'mihdan-index-now'),
@@ -762,7 +761,7 @@ class Settings
 						'id'      => 'host_id',
 						'type'    => 'select',
 						'name'    => __('Host ID', 'mihdan-index-now'),
-						'options' => $this->get_yandex_webmaster_host_ids()
+						'options' => ['' => '&mdash;&mdash;&mdash;'] + $this->get_yandex_webmaster_host_ids()
 					)
 				);
 			}

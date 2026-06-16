@@ -17,6 +17,7 @@ use Mihdan\IndexNow\Dependencies\phpseclib3\Math\BigInteger;
 /** @internal */
 class Curve25519 extends Montgomery
 {
+    const SIZE = 32;
     public function __construct()
     {
         // 2^255 - 19
@@ -44,9 +45,10 @@ class Curve25519 extends Montgomery
      */
     public function multiplyPoint(array $p, BigInteger $d)
     {
-        //$r = strrev(sodium_crypto_scalarmult($d->toBytes(), strrev($p[0]->toBytes())));
-        //return [$this->factory->newInteger(new BigInteger($r, 256))];
         $d = $d->toBytes();
+        $d = \str_pad($d, 32, "\x00", \STR_PAD_LEFT);
+        //$r = strrev(sodium_crypto_scalarmult($d, strrev($p[0]->toBytes())));
+        //return [$this->factory->newInteger(new BigInteger($r, 256))];
         $d &= "\xf8" . \str_repeat("\xff", 30) . "";
         $d = \strrev($d);
         $d |= "@";

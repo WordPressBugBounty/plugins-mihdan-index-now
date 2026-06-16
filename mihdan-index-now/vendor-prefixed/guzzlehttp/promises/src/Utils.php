@@ -68,9 +68,13 @@ final class Utils
     {
         try {
             return ['state' => PromiseInterface::FULFILLED, 'value' => $promise->wait()];
-        } catch (RejectionException $e) {
-            return ['state' => PromiseInterface::REJECTED, 'reason' => $e->getReason()];
         } catch (\Throwable $e) {
+            if ($e instanceof AggregateException) {
+                return ['state' => PromiseInterface::REJECTED, 'reason' => $e];
+            }
+            if ($e instanceof RejectionException) {
+                return ['state' => PromiseInterface::REJECTED, 'reason' => $e->getReason()];
+            }
             return ['state' => PromiseInterface::REJECTED, 'reason' => $e];
         }
     }
@@ -86,6 +90,7 @@ final class Utils
      */
     public static function inspectAll($promises) : array
     {
+        $promises = self::prepareIterable($promises, __FUNCTION__);
         $results = [];
         foreach ($promises as $key => $promise) {
             $results[$key] = self::inspect($promise);
@@ -105,6 +110,7 @@ final class Utils
      */
     public static function unwrap($promises) : array
     {
+        $promises = self::prepareIterable($promises, __FUNCTION__);
         $results = [];
         foreach ($promises as $key => $promise) {
             $results[$key] = $promise->wait();
@@ -124,6 +130,7 @@ final class Utils
      */
     public static function all($promises, bool $recursive = \false) : PromiseInterface
     {
+        $promises = self::prepareIterable($promises, __FUNCTION__);
         $results = [];
         $promise = Each::of($promises, function ($value, $idx) use(&$results) : void {
             $results[$idx] = $value;
@@ -163,6 +170,7 @@ final class Utils
      */
     public static function some(int $count, $promises) : PromiseInterface
     {
+        $promises = self::prepareIterable($promises, __FUNCTION__);
         $results = [];
         $rejections = [];
         return Each::of($promises, function ($value, $idx, PromiseInterface $p) use(&$results, $count) : void {
@@ -191,6 +199,7 @@ final class Utils
      */
     public static function any($promises) : PromiseInterface
     {
+        $promises = self::prepareIterable($promises, __FUNCTION__);
         return self::some(1, $promises)->then(function ($values) {
             return $values[0];
         });
@@ -207,6 +216,7 @@ final class Utils
      */
     public static function settle($promises) : PromiseInterface
     {
+        $promises = self::prepareIterable($promises, __FUNCTION__);
         $results = [];
         return Each::of($promises, function ($value, $idx) use(&$results) : void {
             $results[$idx] = ['state' => PromiseInterface::FULFILLED, 'value' => $value];
@@ -216,5 +226,20 @@ final class Utils
             \ksort($results);
             return $results;
         });
+    }
+    private static function prepareIterable($promises, string $method) : iterable
+    {
+        if (\is_iterable($promises)) {
+            return $promises;
+        }
+        self::triggerNonIterableDeprecation($promises, $method);
+        return [$promises];
+    }
+    private static function triggerNonIterableDeprecation($promises, string $method) : void
+    {
+        if (\is_iterable($promises)) {
+            return;
+        }
+        \Mihdan\IndexNow\Dependencies\trigger_deprecation('guzzlehttp/promises', '2.5', 'Passing a non-iterable to %s::%s() is deprecated; guzzlehttp/promises 3.0 will require an iterable.', self::class, $method);
     }
 }
