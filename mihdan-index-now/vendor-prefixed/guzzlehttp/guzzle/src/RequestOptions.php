@@ -5,7 +5,7 @@ namespace Mihdan\IndexNow\Dependencies\GuzzleHttp;
 /**
  * This class contains a list of built-in Guzzle request options.
  *
- * @see https://github.com/guzzle/guzzle/blob/7.11/docs/request-options.md
+ * @see https://github.com/guzzle/guzzle/blob/7.12/docs/request-options.md
  * @internal
  */
 final class RequestOptions
@@ -89,6 +89,10 @@ final class RequestOptions
      * required to use TLS 1.3.
      */
     public const CRYPTO_METHOD = 'crypto_method';
+    /**
+     * curl: (array) Raw cURL options to apply when using a built-in cURL handler.
+     */
+    public const CURL = 'curl';
     /**
      * debug: (bool|resource) Set to true or set to a PHP stream returned by
      * fopen()  enable debug output with the HTTP handler used to send a
@@ -243,6 +247,11 @@ final class RequestOptions
      */
     public const STREAM = 'stream';
     /**
+     * stream_context: (array) PHP stream context options to merge into the
+     * context used by the built-in stream handler.
+     */
+    public const STREAM_CONTEXT = 'stream_context';
+    /**
      * verify: (bool|string, default=true) Describes the SSL certificate
      * verification behavior of a request. Set to true to enable SSL
      * certificate verification using the system CA bundle when available
@@ -261,6 +270,10 @@ final class RequestOptions
      * Number describing the body read timeout, for stream requests.
      */
     public const READ_TIMEOUT = 'read_timeout';
+    /**
+     * retries: (int) Current retry count used by the retry middleware.
+     */
+    public const RETRIES = 'retries';
     /**
      * version: (string|int|float) Specifies the HTTP protocol version to attempt
      * to use.

@@ -31,6 +31,7 @@ trait MessageTrait
         if (!\is_string($version)) {
             \Mihdan\IndexNow\Dependencies\trigger_deprecation('guzzlehttp/psr7', '2.11', 'Passing %s to MessageInterface::withProtocolVersion() is deprecated; guzzlehttp/psr7 3.0 requires string.', \get_debug_type($version));
         }
+        $this->assertProtocolVersion($version);
         if ($this->protocol === $version) {
             return $this;
         }
@@ -225,6 +226,21 @@ trait MessageTrait
         }
         if (!\preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/D', $header)) {
             throw new \InvalidArgumentException(\sprintf('"%s" is not valid header name.', $header));
+        }
+    }
+    /**
+     * @param mixed $version
+     */
+    private function assertProtocolVersion($version) : void
+    {
+        if (\is_string($version)) {
+            $this->assertNoLineSeparators($version, 'Protocol version');
+        }
+    }
+    private function assertNoLineSeparators(string $value, string $field) : void
+    {
+        if (\strpbrk($value, "\r\n") !== \false) {
+            throw new \InvalidArgumentException($field . ' must not contain CR or LF characters.');
         }
     }
     /**

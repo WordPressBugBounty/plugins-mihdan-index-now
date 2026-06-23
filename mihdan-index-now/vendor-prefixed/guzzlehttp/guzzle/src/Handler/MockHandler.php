@@ -7,7 +7,6 @@ use Mihdan\IndexNow\Dependencies\GuzzleHttp\HandlerStack;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\Promise as P;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\Promise\PromiseInterface;
 use Mihdan\IndexNow\Dependencies\GuzzleHttp\TransferStats;
-use Mihdan\IndexNow\Dependencies\GuzzleHttp\Utils;
 use Mihdan\IndexNow\Dependencies\Psr\Http\Message\RequestInterface;
 use Mihdan\IndexNow\Dependencies\Psr\Http\Message\ResponseInterface;
 use Mihdan\IndexNow\Dependencies\Psr\Http\Message\StreamInterface;
@@ -132,7 +131,7 @@ class MockHandler implements \Countable
             if ($value instanceof ResponseInterface || $value instanceof \Throwable || $value instanceof PromiseInterface || \is_callable($value)) {
                 $this->queue[] = $value;
             } else {
-                throw new \TypeError('Expected a Response, Promise, Throwable or callable. Found ' . Utils::describeType($value));
+                throw new \TypeError('Expected a Response, Promise, Throwable or callable. Found ' . \get_debug_type($value));
             }
         }
     }

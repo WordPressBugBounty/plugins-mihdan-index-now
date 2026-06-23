@@ -89,8 +89,8 @@ class YandexWebmaster extends WebmasterAbstract
 			return;
 		}
 
-		add_action('mihdan_index_now/post_added', [$this, 'ping']);
-		add_action('mihdan_index_now/post_updated', [$this, 'ping']);
+		add_action('crawlwp/post_added', [$this, 'ping']);
+		add_action('crawlwp/post_updated', [$this, 'ping']);
 	}
 
 	public function get_api_token()
@@ -133,13 +133,8 @@ class YandexWebmaster extends WebmasterAbstract
 				}
 			}
 
-			wp_safe_redirect(
-				add_query_arg(
-					'page',
-					Utils::get_plugin_slug(),
-					admin_url('admin.php')
-				)
-			);
+			wp_safe_redirect(CRAWLWP_API_SETTINGS_URL);
+			exit;
 		}
 	}
 
@@ -152,9 +147,7 @@ class YandexWebmaster extends WebmasterAbstract
 	{
 		$refresh_token = $this->wposa->get_option('refresh_token', 'yandex_webmaster');
 
-		if (empty($refresh_token)) {
-			return '';
-		}
+		if (empty($refresh_token)) return '';
 
 		$data = [];
 		$data['body'] = [
@@ -309,7 +302,7 @@ class YandexWebmaster extends WebmasterAbstract
 			$this->logger->error($body['error_message'], $data);
 		}
 
-		do_action('mihdan_index_now/index_pinged', 'post', $post_id);
+		do_action('crawlwp/index_pinged', 'post', $post_id);
 	}
 
 	public function get_quota(): array
