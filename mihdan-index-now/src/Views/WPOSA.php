@@ -1579,7 +1579,8 @@ class WPOSA
 						.change();
 
 					var REDIRECT_URL = '<?php echo esc_url(admin_url('admin.php?page=' . Utils::get_plugin_slug())); ?>';
-					var CODE_ENDPOINT = 'https://oauth.yandex.com/authorize?state=yandex-webmaster&response_type=code&force_confirm=yes&redirect_uri=' + REDIRECT_URL + '&client_id=';
+					var YSTATE = '<?php echo wp_create_nonce('yandex_oauth_nonce'); ?>';
+					var CODE_ENDPOINT = 'https://oauth.yandex.com/authorize?state=' + YSTATE + '&response_type=code&force_confirm=yes&redirect_uri=' + REDIRECT_URL + '&client_id=';
 
 					$('#button_get_token').on(
 						'click',
@@ -2031,7 +2032,7 @@ class WPOSA
 				transition: .25s;
 				font-weight: 500;
 				line-height: 30px;
-				color: #2271b1;
+				color: var(--wp-admin-theme-color, #2271b1);
 				border-radius: 4px;
 			}
 
@@ -2149,11 +2150,11 @@ class WPOSA
 				display: block;
 				margin: 0 0 20px;
 				width: 100%;
-				border-left: 2px solid #2271b1;
+				border-left: 2px solid var(--wp-admin-theme-color, #2271b1);
 				font: 300 30px/60px '';
 				text-align: center;
 				color: #ffffff;
-				background: #2271b1;
+				background: var(--wp-admin-theme-color, #2271b1);
 				border-radius: 4px;
 			}
 
@@ -2221,8 +2222,8 @@ class WPOSA
 				display: inline-block;
 				font-weight: 400;
 				text-decoration: none;
-				background: #2271b1;
-				border-color: #2271b1;
+				background: var(--wp-admin-theme-color, #2271b1);
+				border-color: var(--wp-admin-theme-color, #2271b1);
 				color: #fff;
 				font-size: 16px;
 				padding: 14px 27px;

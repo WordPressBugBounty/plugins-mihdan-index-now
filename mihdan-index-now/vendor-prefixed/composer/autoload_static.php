@@ -297,6 +297,7 @@ class ComposerStaticInit6f8a9af58565738d97624b673fbe1dc0
         'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Handler\\Proxy' => __DIR__ . '/../..' . '/vendor-prefixed/guzzlehttp/guzzle/src/Handler/Proxy.php',
         'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Handler\\ProxyEnvironment' => __DIR__ . '/../..' . '/vendor-prefixed/guzzlehttp/guzzle/src/Handler/ProxyEnvironment.php',
         'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Handler\\StreamHandler' => __DIR__ . '/../..' . '/vendor-prefixed/guzzlehttp/guzzle/src/Handler/StreamHandler.php',
+        'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Handler\\TlsVersion' => __DIR__ . '/../..' . '/vendor-prefixed/guzzlehttp/guzzle/src/Handler/TlsVersion.php',
         'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\MessageFormatter' => __DIR__ . '/../..' . '/vendor-prefixed/guzzlehttp/guzzle/src/MessageFormatter.php',
         'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\MessageFormatterInterface' => __DIR__ . '/../..' . '/vendor-prefixed/guzzlehttp/guzzle/src/MessageFormatterInterface.php',
         'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Middleware' => __DIR__ . '/../..' . '/vendor-prefixed/guzzlehttp/guzzle/src/Middleware.php',

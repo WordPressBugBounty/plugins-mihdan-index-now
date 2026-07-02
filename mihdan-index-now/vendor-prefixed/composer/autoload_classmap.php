@@ -265,6 +265,7 @@ return array(
     'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Handler\\Proxy' => $baseDir . '/vendor-prefixed/guzzlehttp/guzzle/src/Handler/Proxy.php',
     'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Handler\\ProxyEnvironment' => $baseDir . '/vendor-prefixed/guzzlehttp/guzzle/src/Handler/ProxyEnvironment.php',
     'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Handler\\StreamHandler' => $baseDir . '/vendor-prefixed/guzzlehttp/guzzle/src/Handler/StreamHandler.php',
+    'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Handler\\TlsVersion' => $baseDir . '/vendor-prefixed/guzzlehttp/guzzle/src/Handler/TlsVersion.php',
     'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\MessageFormatter' => $baseDir . '/vendor-prefixed/guzzlehttp/guzzle/src/MessageFormatter.php',
     'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\MessageFormatterInterface' => $baseDir . '/vendor-prefixed/guzzlehttp/guzzle/src/MessageFormatterInterface.php',
     'Mihdan\\IndexNow\\Dependencies\\GuzzleHttp\\Middleware' => $baseDir . '/vendor-prefixed/guzzlehttp/guzzle/src/Middleware.php',
